@@ -20,6 +20,8 @@ module Contracts
 #        validate :time_not_exceed_contract
 #        before_save :create_next_contract
 
+        before_save :auto_assign_contract
+
         # Validate the "hours" input field for hourly contracts.
         #
         # Validate that the hours entered do not exceed the hours remaining on a contract.
@@ -119,6 +121,14 @@ module Contracts
       end
     end
 
+	# automatically assignes to last added contract
+    def auto_assign_contract
+      return if contract
+      if Setting.plugin_contracts['automatic_assign_time_entry_to_last_contract']
+        self.contract = project.contracts.last
+      end
+	end
+	
     module InstanceMethods
 
       def refresh_contract
