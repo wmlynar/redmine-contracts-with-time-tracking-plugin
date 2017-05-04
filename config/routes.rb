@@ -25,3 +25,4 @@ match 'projects/:project_id/expenses/create'                => 'contracts_expens
 match 'projects/:project_id/expenses/update/:id'            => 'contracts_expenses#update',   :via => :put
 match 'projects/:project_id/expenses/destroy/:id'           => 'contracts_expenses#destroy',   :via => :delete
 
+match 'projects/:project_id/contracts/:id/add_all_unassigned_time_entries' => 'contracts#add_all_unassigned_time_entries', :via => :get

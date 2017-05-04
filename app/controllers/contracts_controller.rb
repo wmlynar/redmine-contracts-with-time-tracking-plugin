@@ -181,6 +181,24 @@ class ContractsController < ApplicationController
     redirect_to "/projects/#{@contract.project.id}/contracts/#{@contract.id}" 
   end
 
+  def add_all_unassigned_time_entries
+    @contract = Contract.find(params[:id])
+    @project = @contract.project
+    time_entries = @contract.project.time_entries_for_all_descendant_projects
+    if time_entries != nil
+      time_entries.each do |time_entry|
+	    if !time_entry.contract
+          time_entry.contract = @contract
+		end
+        time_entry.save
+      end
+    end
+    unless @contract.hours_remaining >= 0
+      flash[:error] = l(:text_hours_over_contract, :hours_over => l_hours(-1 * @contract.hours_remaining))
+    end
+    redirect_to "/projects/#{@contract.project.id}/contracts/#{@contract.id}" 
+  end
+
   def lock
     @contract = Contract.find(params[:id])
     @lock = (params[:lock] == 'true')

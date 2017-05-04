@@ -8,6 +8,9 @@
   <% if  !@contract.is_locked && User.current.allowed_to?(:edit_contracts, @project) %>
     <%= link_to l(:label_add_time_entries), { :controller => 'contracts', :action => 'add_time_entries', :project_id => @project.identifier, :id => @contract.id }, :class => 'icon icon-issue' %>
   <% end %>
+  <% if  !@contract.is_locked && User.current.allowed_to?(:edit_contracts, @project) %>
+    <%= link_to "Auto-assign unassigned time entries", { :controller => 'contracts', :action => 'add_all_unassigned_time_entries', :project_id => @project.identifier, :id => @contract.id }, :class => 'icon icon-issue' %>
+  <% end %>
 </div>
 
 <h2>
