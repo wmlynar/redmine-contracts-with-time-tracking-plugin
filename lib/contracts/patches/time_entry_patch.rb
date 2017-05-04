@@ -14,8 +14,11 @@ module Contracts
 
         attr_accessor :flash_time_entry_success, :flash_only_one_time_entry
 
-        validate :time_not_exceed_contract
-        before_save :create_next_contract
+# woj: commenting out two lines below fixes error "undefined method `is_fixed_price' for nil:NilClass"
+#  when trying to add time entry, but disables recurring contracts (not available in this version of contracts plugin anyway)
+#
+#        validate :time_not_exceed_contract
+#        before_save :create_next_contract
 
         # Validate the "hours" input field for hourly contracts.
         #
